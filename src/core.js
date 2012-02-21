@@ -283,7 +283,27 @@
 	};
 
 	// Attach the oCanvas object to the window object for access outside of this file
-	window.oCanvas = oCanvas;
+	// window.oCanvas = oCanvas;
+	
+	// Export the canvas object for **Node.js** and **"CommonJS"**, with
+	// backwards-compatibility for the old `require()` API. If we're not in
+	// CommonJS, add `canvas` to the global object.
+	// (N.B. to use in Node you would need to add implementations for window 
+	// and document.)
+	if (typeof exports !== 'undefined') {
+	  if (typeof module !== 'undefined' && module.exports) {
+		exports = module.exports = oCanvas;
+	  }
+	  exports.oCanvas = oCanvas;
+	} else if (typeof define === 'function' && define.amd) {
+	  // Register as a named module with AMD.
+	  define('ocanvas', function() {
+		return oCanvas;
+	  });
+	} else {
+	  // Exported as a string, for Closure Compiler "advanced" mode.
+	  window['oCanvas'] = oCanvas;
+	}
 
 	oCanvas.domReady();
 	
