@@ -1,6 +1,6 @@
 version = 2.0.0
 source_dir = ../src/
-output_full = ocanvas-{version}.js
+output_full = ocanvas.js
 output_min = ocanvas-{version}.min.js
 
 head
@@ -41,6 +41,8 @@ displayobjects/ellipse.js
 displayobjects/polygon.js
 displayobjects/line.js
 displayobjects/sprite.js
+displayobjects/curve.js
+displayobjects/arrow.js
 -----
 
 foot
