@@ -48,6 +48,17 @@
 				self = this;
 				canvasElement = this.core.canvasElement;
 
+				// Really need a proactive way to remove event handlers in case canvas
+				// element is removed, but this works for now...  (Only seems to be an issue on IE9.)
+				var docHandler = function (e) {
+					try {
+						self.docHandler(e);
+					} catch (exc) {
+						if (console) console.log("Exception on " + e.type + " (" + e.x + "," + e.y + ")");
+						document.removeEventListener(e.type, docHandler, false);
+					}
+				}
+
 				for (type in this.types) {
 
 					// Add event listeners to the canvas element
@@ -59,14 +70,10 @@
 					if (type === "mousemove") {
 						type = "mouseover";
 					}
-					document.addEventListener(type, function (e) {
-						self.docHandler(e);
-					}, false);
+					document.addEventListener(type, docHandler, false);
 
 					if (window.parent !== window) {
-						window.parent.document.addEventListener(type, function (e) {
-							self.docHandler(e);
-						}, false);
+						window.parent.document.addEventListener(type, docHandler, false);
 					}
 				}
 			},
