@@ -57,7 +57,9 @@
 					_this.tile_width = (_this.tile_width === 0) ? _this.width : _this.tile_width;
 					_this.tile_height = (_this.tile_height === 0) ? _this.height : _this.tile_height;
 					_this.core.canvasElement.removeChild(this);
-					_this.core.redraw();
+					setTimeout(function() {
+						_this.core.redraw();
+					}, 200);
 				};
 				
 				// Set the path to the image if a string was passed in
